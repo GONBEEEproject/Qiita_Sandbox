@@ -10,9 +10,12 @@ public class DemoSequence : MonoBehaviour
     [SerializeField]
     private Transform startMark, endMark;
 
+    private Sequence sequence;
+
     private void Start()
     {
         moveTarget.position = startMark.position;
+
     }
 
     private void Update()
@@ -21,17 +24,27 @@ public class DemoSequence : MonoBehaviour
         {
             Move();
         }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Stop();
+        }
     }
 
     private void Move()
     {
-        //moveTarget.DOMove(endMark.position, 2.0f);
+        Sequence tmpSeq = DOTween.Sequence();   //メソッド内で個別に宣言しないといけない
 
-        Sequence sequence = DOTween.Sequence();
+        tmpSeq.Append(moveTarget.DOMove(endMark.position, 2.0f));
+        tmpSeq.Append(moveTarget.DOMove(startMark.position, 2.0f));
 
-        sequence.Append(moveTarget.DOMove(endMark.position, 2.0f));
-        sequence.Append(moveTarget.DOMove(startMark.position, 2.0f));
+        sequence = tmpSeq;                      //ローカル宣言のSequenceをクラス変数に入れ直す
 
-        sequence.Play();
+        sequence.Play();                        //クラス変数のSequence（中身入り）を再生する
+    }
+
+    private void Stop()
+    {
+        sequence.Kill();
     }
 }

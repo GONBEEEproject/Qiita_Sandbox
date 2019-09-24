@@ -288,6 +288,7 @@ MonoBehaviour:
   moveTarget: {fileID: 188169593}
   startMark: {fileID: 194050077}
   endMark: {fileID: 253091147}
+  ease: 1
 --- !u!1 &194050073
 GameObject:
   m_ObjectHideFlags: 0
