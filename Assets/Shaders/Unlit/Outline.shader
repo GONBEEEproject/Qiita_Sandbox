@@ -1,5 +1,10 @@
 ﻿Shader "Unlit/Outline"
 {
+    Properties{
+        _thickness("Thickness",Range(0,1))=1
+
+    }
+
     SubShader
     {
         Tags { "RenderType"="Opaque" }
@@ -24,9 +29,11 @@
                 float4 vertex:SV_POSITION;
             };
 
+            float _thickness;
+
             v2f vert(appdata v){
                 v2f o;
-                v.vertex+=float4(v.normal*0.04f,0);
+                v.vertex+=float4(v.normal*_thickness,0);
                 o.vertex=UnityObjectToClipPos(v.vertex);
                 return o;
             }
